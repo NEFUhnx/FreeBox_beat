@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"/>
+        <item
+            android:id="@+id/nav_msg"
+            android:title="Message"/>
+        <item
+            android:id="@+id/nav_myhouse"
+            android:title="My House"/>
+        <item
+            android:id="@+id/nav_stars"
+            android:title="Stars"/>
+        <item
+            android:id="@+id/nav_history"
+            android:title="History"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="nav_setting"
+            android:title="Setting"/>
+        <item
+            android:id="@+id/nav_abouts"
+            android:title="Abouts"/>
+    </group>
+
+</menu>
