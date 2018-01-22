@@ -10,6 +10,9 @@
             android:id="@+id/nav_msg"
             android:title="Message"/>
         <item
+            android:id="@+id/nav_order"
+            android:title="Order"/>
+        <item
             android:id="@+id/nav_myhouse"
             android:title="My House"/>
         <item
@@ -19,8 +22,7 @@
             android:id="@+id/nav_history"
             android:title="History"/>
     </group>
-    <group android:id="@+id/nav_group2"
-        android:checkableBehavior="single">
+    <group android:id="@+id/nav_group2">
         <item
             android:id="@+id/nav_setting"
             android:title="Setting"/>
