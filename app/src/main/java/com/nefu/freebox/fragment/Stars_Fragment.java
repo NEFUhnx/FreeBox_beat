@@ -1,4 +1,4 @@
-package com.nefu.fragment;
+package com.nefu.freebox.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

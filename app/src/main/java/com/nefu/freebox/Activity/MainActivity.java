@@ -1,6 +1,8 @@
-package com.nefu.freebox;
+package com.nefu.freebox.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
@@ -11,23 +13,34 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-import com.nefu.fragment.History_Fragment;
-import com.nefu.fragment.Home_Fragment;
-import com.nefu.fragment.Msg_Fragment;
-import com.nefu.fragment.Myhouse_Fragment;
-import com.nefu.fragment.Order_Fragment;
-import com.nefu.fragment.Stars_Fragment;
+import com.nefu.freebox.R;
+import com.nefu.freebox.fragment.History_Fragment;
+import com.nefu.freebox.fragment.Home_Fragment;
+import com.nefu.freebox.fragment.Msg_Fragment;
+import com.nefu.freebox.fragment.Myhouse_Fragment;
+import com.nefu.freebox.fragment.Order_Fragment;
+import com.nefu.freebox.fragment.Stars_Fragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
+    private long mExitTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         setContentView(R.layout.activity_main);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -95,5 +108,19 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(findViewById(R.id.nav_view))){
+            mDrawerLayout.closeDrawers();
+        }else{
+            if(System.currentTimeMillis() - mExitTime > 1500) {
+                mExitTime = System.currentTimeMillis();
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            }
+            else
+                super.onBackPressed();
+        }
     }
 }
