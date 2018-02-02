@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="2206299036@qq.com"
-        android:paddingLeft="10dp"
-        android:textColor="#fff"
+        android:paddingStart="10dp"
+        android:textColor="#ee000000"
         android:textSize="14sp"/>
     <TextView
         android:id="@+id/nav_username"
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/nav_mail"
         android:text="Hnx."
-        android:paddingLeft="10dp"
-        android:textColor="#fff"
+        android:paddingStart="10dp"
+        android:textColor="#ee000000"
         android:textSize="14sp"/>
 
 </RelativeLayout>

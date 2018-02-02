@@ -15,13 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.nefu.freebox.Adapter.Adapter_Msg_Msg;
+import com.nefu.freebox.Bean.BaseActivity;
 import com.nefu.freebox.Entity.Msg;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MsgActivity extends AppCompatActivity {
+public class MsgActivity extends BaseActivity {
 
     public static final String MSG_USER_IMAGE = "msg_user_image";
     public static final String MSG_USER_NAME = "msg_user_name";
@@ -35,13 +36,6 @@ public class MsgActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if(Build.VERSION.SDK_INT >= 21){
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
         setContentView(R.layout.activity_msg);
         Intent intent = getIntent();
         String Msg_userName = intent.getStringExtra(MSG_USER_NAME);

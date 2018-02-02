@@ -17,9 +17,7 @@
             android:id="@+id/activity_msg_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:background="?attr/colorPrimary"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -42,6 +40,6 @@
             android:id="@+id/msg_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SEND"/>
+            android:text="@string/activity_msg_bt"/>
     </LinearLayout>
 </LinearLayout>

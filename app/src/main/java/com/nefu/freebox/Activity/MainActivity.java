@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.nefu.freebox.Bean.BaseActivity;
+import com.nefu.freebox.Bean.MIUI;
 import com.nefu.freebox.R;
 import com.nefu.freebox.fragment.History_Fragment;
 import com.nefu.freebox.fragment.Home_Fragment;
@@ -25,7 +27,7 @@ import com.nefu.freebox.fragment.Myhouse_Fragment;
 import com.nefu.freebox.fragment.Order_Fragment;
 import com.nefu.freebox.fragment.Stars_Fragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private DrawerLayout mDrawerLayout;
 
@@ -34,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= 21){
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
         setContentView(R.layout.activity_main);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

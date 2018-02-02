@@ -11,23 +11,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nefu.freebox.Bean.BaseActivity;
+import com.nefu.freebox.Bean.MIUI;
 import com.nefu.freebox.R;
 
 /**
  * Created by 22062 on 2018/1/21.
  */
 
-public class AboutsActivity extends AppCompatActivity {
+public class AboutsActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= 21){
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
         setContentView(R.layout.layout_abouts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_abouts);
         setSupportActionBar(toolbar);
