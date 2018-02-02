@@ -7,15 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.nefu.freebox.Activity.Home_Activity;
+import com.nefu.freebox.Activity.HomeActivity;
 import com.nefu.freebox.Entity.Home_MainItem;
 import com.nefu.freebox.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -60,9 +59,9 @@ public class Adapter_Home_MainItem extends RecyclerView.Adapter<Adapter_Home_Mai
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 Home_MainItem item = mItemList.get(position);
-                Intent intent = new Intent(mContext, Home_Activity.class);
-                intent.putExtra(Home_Activity.ITEM_NAME, item.getName());
-                intent.putExtra(Home_Activity.ITEM_IMAGE_ID, item.getImageId());
+                Intent intent = new Intent(mContext, HomeActivity.class);
+                intent.putExtra(HomeActivity.ITEM_NAME, item.getHome_itemName());
+                intent.putExtra(HomeActivity.ITEM_IMAGE_ID, item.getHome_imageId());
                 mContext.startActivity(intent);
             }
         });
@@ -72,8 +71,8 @@ public class Adapter_Home_MainItem extends RecyclerView.Adapter<Adapter_Home_Mai
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Home_MainItem item = mItemList.get(position);
-        holder.itemName.setText(item.getName());
-        Glide.with(mContext).load(item.getImageId()).into(holder.itemImage);
+        holder.itemName.setText(item.getHome_itemName());
+        Glide.with(mContext).load(item.getHome_imageId()).into(holder.itemImage);
     }
 
     @Override

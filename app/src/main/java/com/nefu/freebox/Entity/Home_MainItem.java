@@ -5,40 +5,40 @@ package com.nefu.freebox.Entity;
  */
 
 public class Home_MainItem {
-    private int itemId;
-    private String name;
-    private int imageId;
+    private int Home_itemId;
+    private String Home_itemName;
+    private int Home_imageId;
 
     public Home_MainItem(){
 
     }
 
-    public Home_MainItem(String name, int imageId){
-        this.name = name;
-        this.imageId = imageId;
+    public Home_MainItem(String name, int Home_imageId){
+        this.Home_itemName = name;
+        this.Home_imageId = Home_imageId;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getHome_itemId() {
+        return Home_itemId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setHome_itemId(int home_itemId) {
+        this.Home_itemId = home_itemId;
     }
 
-    public String getName() {
-        return name;
+    public String getHome_itemName() {
+        return Home_itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHome_itemName(String name) {
+        this.Home_itemName = name;
     }
 
-    public int getImageId() {
-        return imageId;
+    public int getHome_imageId() {
+        return Home_imageId;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setHome_imageId(int home_imageId) {
+        this.Home_imageId = home_imageId;
     }
 }

@@ -119,7 +119,7 @@ public class Home_Fragment extends Fragment {
             @Override
             public void run() {
                 try{
-                    Thread.sleep(1000);
+                    Thread.sleep(300);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
