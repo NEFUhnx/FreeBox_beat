@@ -40,6 +40,11 @@ public class Home_Fragment extends Fragment {
     private Adapter_Home_MainItem adapter;
     private SwipeRefreshLayout swipeRefresh;
 
+    public static Home_Fragment newInstance(){
+        Home_Fragment fragment = new Home_Fragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,7 @@ public class Home_Fragment extends Fragment {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Home");
-            //actionBar.setHomeAsUpIndicator(R.mipmap.touxiang);
+            actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
 
         initItem();

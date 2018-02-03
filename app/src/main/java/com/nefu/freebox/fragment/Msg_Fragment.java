@@ -31,6 +31,11 @@ public class Msg_Fragment extends Fragment {
     private Adapter_Msg_Item adapter;
     private SwipeRefreshLayout swipeRefresh;
 
+    public static Msg_Fragment newInstance(){
+        Msg_Fragment fragment = new Msg_Fragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,7 @@ public class Msg_Fragment extends Fragment {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Message");
+            actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
 
         initItem();

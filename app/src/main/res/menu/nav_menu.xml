@@ -5,30 +5,38 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Home"/>
+            android:icon="@mipmap/home"
+            android:title="@string/nav_home"/>
         <item
             android:id="@+id/nav_msg"
-            android:title="Message"/>
+            android:icon="@mipmap/message"
+            android:title="@string/nav_message"/>
         <item
             android:id="@+id/nav_order"
-            android:title="Order"/>
+            android:icon="@mipmap/order"
+            android:title="@string/nav_order"/>
         <item
             android:id="@+id/nav_myhouse"
-            android:title="My House"/>
+            android:icon="@mipmap/my_house"
+            android:title="@string/nav_my_house"/>
         <item
             android:id="@+id/nav_stars"
-            android:title="Stars"/>
+            android:icon="@mipmap/stars_checked"
+            android:title="@string/nav_stars"/>
         <item
             android:id="@+id/nav_history"
-            android:title="History"/>
+            android:icon="@mipmap/history"
+            android:title="@string/nav_history"/>
     </group>
     <group android:id="@+id/nav_group2">
         <item
-            android:id="@+id/nav_setting"
-            android:title="Setting"/>
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/settings"
+            android:title="@string/nav_settings"/>
         <item
             android:id="@+id/nav_abouts"
-            android:title="Abouts"/>
+            android:icon="@mipmap/abouts"
+            android:title="@string/nav_abouts"/>
     </group>
 
 </menu>

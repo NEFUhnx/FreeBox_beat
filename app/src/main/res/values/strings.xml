@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">FreeBox</string>
     <string name="activity_msg_bt">Send</string>
+    <string name="toolbar_menu_publish">Publish</string>
+    <string name="toolbar_menu_edit">Edit</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_message">Message</string>
+    <string name="nav_order">Order</string>
+    <string name="nav_my_house">My House</string>
+    <string name="nav_stars">Stars</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_abouts">Abouts</string>
 </resources>

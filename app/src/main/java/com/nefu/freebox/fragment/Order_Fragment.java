@@ -18,6 +18,12 @@ import com.nefu.freebox.R;
 
 
 public class Order_Fragment extends Fragment {
+
+    public static Order_Fragment newInstance(){
+        Order_Fragment fragment = new Order_Fragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +47,9 @@ public class Order_Fragment extends Fragment {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Order");
+            actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
+
     }
 
     @Override

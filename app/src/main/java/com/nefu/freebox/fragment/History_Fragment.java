@@ -18,6 +18,11 @@ import com.nefu.freebox.R;
 
 public class History_Fragment extends Fragment {
 
+    public static History_Fragment newInstance(){
+        History_Fragment fragment = new History_Fragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,7 @@ public class History_Fragment extends Fragment {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("History");
+            actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
     }
 

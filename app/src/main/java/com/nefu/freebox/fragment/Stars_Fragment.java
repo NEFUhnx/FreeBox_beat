@@ -18,6 +18,11 @@ import com.nefu.freebox.R;
 
 public class Stars_Fragment extends Fragment {
 
+    public static Stars_Fragment newInstance(){
+        Stars_Fragment fragment = new Stars_Fragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,7 @@ public class Stars_Fragment extends Fragment {
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Stars");
+            actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
     }
 }

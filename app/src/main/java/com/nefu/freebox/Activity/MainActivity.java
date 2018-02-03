@@ -30,6 +30,8 @@ import com.nefu.freebox.fragment.Stars_Fragment;
 public class MainActivity extends BaseActivity {
 
     private DrawerLayout mDrawerLayout;
+    private NavigationView navigationView;
+    private Fragment currentFragment = null;
 
     private long mExitTime = 0;
 
@@ -38,8 +40,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        replaceFragment(new Home_Fragment());
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if(currentFragment == null){
+            currentFragment = Home_Fragment.newInstance();
+            replaceFragment(currentFragment);
+        }
         navigationView.setCheckedItem(R.id.nav_home);
         NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navigationMenuView.setVerticalScrollBarEnabled(false);
@@ -48,24 +53,30 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_home:
-                        replaceFragment(new Home_Fragment());
+                        currentFragment = Home_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
                     case R.id.nav_msg:
-                        replaceFragment(new Msg_Fragment());
+                        currentFragment = Msg_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
                     case R.id.nav_order:
-                        replaceFragment(new Order_Fragment());
+                        currentFragment = Order_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
                     case R.id.nav_myhouse:
-                        replaceFragment(new Myhouse_Fragment());
+                        currentFragment = Myhouse_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
                     case R.id.nav_stars:
-                        replaceFragment(new Stars_Fragment());
+                        currentFragment = Stars_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
                     case R.id.nav_history:
-                        replaceFragment(new History_Fragment());
+                        currentFragment = History_Fragment.newInstance();
+                        replaceFragment(currentFragment);
                         break;
-                    case R.id.nav_setting:
+                    case R.id.nav_settings:
                         Intent intentset = new Intent(MainActivity.this, SettingActivity.class);
                         startActivity(intentset);
                         break;
@@ -110,6 +121,16 @@ public class MainActivity extends BaseActivity {
         if(mDrawerLayout.isDrawerOpen(findViewById(R.id.nav_view))){
             mDrawerLayout.closeDrawers();
         }else{
+            if(currentFragment == null){
+                currentFragment = Home_Fragment.newInstance();
+            }
+            if(!(currentFragment instanceof Home_Fragment)){
+                currentFragment = Home_Fragment.newInstance();
+                replaceFragment(currentFragment);
+                navigationView.setCheckedItem(R.id.nav_home);
+                return;
+            }
+
             if(System.currentTimeMillis() - mExitTime > 1500) {
                 mExitTime = System.currentTimeMillis();
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
