@@ -70,7 +70,7 @@ public class Msg_Fragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         swipeRefresh = (SwipeRefreshLayout) activity.findViewById(R.id.msg_main_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

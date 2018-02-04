@@ -79,7 +79,7 @@ public class Home_Fragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         swipeRefresh = (SwipeRefreshLayout) activity.findViewById(R.id.home_main_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -99,7 +99,6 @@ public class Home_Fragment extends Fragment {
         //return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.menu_search:
-                Log.i(TAG, "onOptionsItemSelected: ----------------------------");
                 Toast.makeText(getActivity(), "Search", Toast.LENGTH_SHORT).show();
                 break;
             default:

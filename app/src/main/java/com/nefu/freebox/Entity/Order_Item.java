@@ -24,4 +24,8 @@ public class Order_Item {
     private String Order_itemName;
     private int Order_imageId;
 
+    public Order_Item(String name, int imageId){
+        Order_itemName = name;
+        Order_imageId = imageId;
+    }
 }
