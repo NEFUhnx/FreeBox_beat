@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
+            android:elevation="6dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true">
 
@@ -45,30 +46,54 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
-                android:layout_margin="5dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/activity_home_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Price"/>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                    android:text="Price"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="11111111111111111111" />
-            </android.support.v7.widget.CardView>
+                    android:text="100￥/day"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:paddingStart="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:text="Address"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="@string/address_test"
+                    android:textSize="16sp"
+                    android:textColor="@color/textGrey"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -106,6 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:tooltipText="star"
+        android:src="@mipmap/stars_white"
         app:layout_anchor="@id/activity_home_appBar"
         app:layout_anchorGravity="bottom|end"/>
 </android.support.design.widget.CoordinatorLayout>
