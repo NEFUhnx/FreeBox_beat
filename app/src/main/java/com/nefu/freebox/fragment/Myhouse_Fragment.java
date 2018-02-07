@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,13 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.nefu.freebox.Adapter.Adapter_MyHouse_Item;
+import com.nefu.freebox.Entity.MyHouse_Item;
 import com.nefu.freebox.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 22062 on 2018/1/21.
  */
 
 public class Myhouse_Fragment extends Fragment {
+
+    private MyHouse_Item[] items = new MyHouse_Item[2];
+    private List<MyHouse_Item> itemList = new ArrayList<>();
+    private Adapter_MyHouse_Item adapter;
 
     public static Myhouse_Fragment newInstance(){
         Myhouse_Fragment fragment = new Myhouse_Fragment();
@@ -52,6 +63,13 @@ public class Myhouse_Fragment extends Fragment {
             actionBar.setTitle("My House");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
+
+        initItems();
+        RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.fragment_myhouse_recycler_view);
+        GridLayoutManager layoutManager = new GridLayoutManager(activity, 1);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new Adapter_MyHouse_Item(itemList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -68,5 +86,12 @@ public class Myhouse_Fragment extends Fragment {
             default:
         }
         return true;
+    }
+
+    private void initItems(){
+        items[0] = new MyHouse_Item("name", R.mipmap.touxiang);
+        items[1] = new MyHouse_Item("name1", R.mipmap.touxiang);
+        itemList.add(items[0]);
+        itemList.add(items[1]);
     }
 }

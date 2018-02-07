@@ -22,7 +22,12 @@ public class BaseActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-            MIUI.MIUISetStatusBarLightMode(this,true);
-            Flyme.FlymeSetStatusBarLightMode(this.getWindow(),true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+        if(MIUI.MIUISetStatusBarLightMode(this,true)){
+
+        }
+        else Flyme.FlymeSetStatusBarLightMode(this.getWindow(),true);
     }
 }
