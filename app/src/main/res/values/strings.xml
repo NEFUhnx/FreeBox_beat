@@ -13,4 +13,15 @@
     <string name="nav_abouts">Abouts</string>
 
     <string name="address_test">黑龙江省哈尔滨市香坊区和兴路26号</string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="password">Password</string>
+    <string name="intent_sign_up">No account yet? Create one</string>
+    <string name="verify_code">verify code</string>
+    <string name="next">next</string>
+    <string name="intent_login">Already a member? Login</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

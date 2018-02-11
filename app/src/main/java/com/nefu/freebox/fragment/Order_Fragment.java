@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nefu.freebox.Adapter.Adapter_Order_Item;
-import com.nefu.freebox.Entity.Order_Item;
+import com.nefu.freebox.adapter.Adapter_Order_Item;
+import com.nefu.freebox.entity.Order_Item;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;

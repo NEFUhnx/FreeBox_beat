@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,15 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nefu.freebox.Adapter.Adapter_Home_MainItem;
-import com.nefu.freebox.Entity.Home_MainItem;
+import com.nefu.freebox.adapter.Adapter_Home_MainItem;
+import com.nefu.freebox.entity.Home_MainItem;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import static android.content.ContentValues.TAG;
 
 
 /**

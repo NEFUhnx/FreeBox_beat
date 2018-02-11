@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nefu.freebox.Adapter.Adapter_Msg_Item;
-import com.nefu.freebox.Entity.Msg_Item;
+import com.nefu.freebox.adapter.Adapter_Msg_Item;
+import com.nefu.freebox.entity.Msg_Item;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;

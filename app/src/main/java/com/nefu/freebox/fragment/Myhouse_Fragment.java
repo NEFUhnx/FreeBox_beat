@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nefu.freebox.Adapter.Adapter_MyHouse_Item;
-import com.nefu.freebox.Entity.MyHouse_Item;
+import com.nefu.freebox.adapter.Adapter_MyHouse_Item;
+import com.nefu.freebox.entity.MyHouse_Item;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;

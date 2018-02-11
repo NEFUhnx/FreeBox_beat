@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nefu.freebox.Adapter.Adapter_History_Item;
-import com.nefu.freebox.Entity.Home_MainItem;
+import com.nefu.freebox.adapter.Adapter_History_Item;
+import com.nefu.freebox.entity.Home_MainItem;
 import com.nefu.freebox.R;
 
 import java.util.ArrayList;
