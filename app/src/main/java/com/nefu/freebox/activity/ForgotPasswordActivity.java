@@ -30,35 +30,30 @@ import cn.bmob.sms.listener.VerifySMSCodeListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-/**
- * Created by 22062 on 2018/2/9.
- */
 
-public class RegisterActivity extends BaseActivity {
+public class ForgotPasswordActivity extends BaseActivity {
 
     private TextInputLayout textInputLayoutNo;
     private TextInputLayout textInputLayoutCode;
     private Button bt_verify;
     private Button bt_next;
-    private TextView intentLogin;
 
     private String number;
     private String verifyCode;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_forgot_password);
         initView();
         setListener();
     }
 
     private void initView(){
-        textInputLayoutNo = findViewById(R.id.activity_register_til_no);
-        textInputLayoutCode = findViewById(R.id.activity_register_til_code);
+        textInputLayoutNo = findViewById(R.id.activity_forgot_password_til_no);
+        textInputLayoutCode = findViewById(R.id.activity_forgot_password_til_code);
         bt_verify = findViewById(R.id.bt_verify);
         bt_next = findViewById(R.id.bt_next);
-        intentLogin = findViewById(R.id.link_login);
     }
 
     private void setListener(){
@@ -78,18 +73,7 @@ public class RegisterActivity extends BaseActivity {
                         @Override
                         public void done(List<User> list, cn.bmob.v3.exception.BmobException e) {
                             if(e == null){
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog.setTitle("Register");
-                                dialog.setMessage("The mobile number has been registered.");
-                                dialog.setCancelable(true);
-                                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                    }
-                                });
-                                dialog.show();
-                            }else{
-                                BmobSMS.requestSMSCode(RegisterActivity.this, number, "Code", new RequestSMSCodeListener(){
+                                BmobSMS.requestSMSCode(ForgotPasswordActivity.this, number, "Code", new RequestSMSCodeListener(){
                                     @Override
                                     public void done(Integer integer, BmobException e) {
                                         if(e == null){
@@ -97,7 +81,7 @@ public class RegisterActivity extends BaseActivity {
                                             Log.i("bmob", "短信id：" + integer);//用于查询本次短信发送详情
                                             bt_verify.setClickable(false);
                                             bt_verify.setBackgroundColor(Color.GRAY);
-                                            Toast.makeText(RegisterActivity.this,
+                                            Toast.makeText(ForgotPasswordActivity.this,
                                                     "Verification code has been sent, valid for 10 minutes",
                                                     Toast.LENGTH_LONG).show();
                                             //倒计时1分钟
@@ -115,12 +99,23 @@ public class RegisterActivity extends BaseActivity {
                                                 }
                                             }.start();
                                         }else{
-                                            Toast.makeText(RegisterActivity.this,
+                                            Toast.makeText(ForgotPasswordActivity.this,
                                                     "Send failed. please check the network connection.",
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
+                            }else{
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
+                                dialog.setTitle("Reset password");
+                                dialog.setMessage("The mobile number is not registered.");
+                                dialog.setCancelable(true);
+                                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                                dialog.show();
                             }
                         }
                     });
@@ -131,25 +126,25 @@ public class RegisterActivity extends BaseActivity {
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
+                final ProgressDialog progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
                 progressDialog.setTitle("Next");
                 progressDialog.setMessage("Being verified...");
                 progressDialog.show();
                 verifyCode = textInputLayoutCode.getEditText().getText().toString();
-                BmobSMS.verifySmsCode(RegisterActivity.this, number, verifyCode,
+                BmobSMS.verifySmsCode(ForgotPasswordActivity.this, number, verifyCode,
                         new VerifySMSCodeListener() {
                             @Override
                             public void done(BmobException e) {
                                 if(e == null){
                                     //验证成功
                                     progressDialog.dismiss();
-                                    Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
+                                    Intent intent = new Intent(ForgotPasswordActivity.this, ForgotPasswordActivity2.class);
                                     intent.putExtra(MOBILE_NUMBER, number);
                                     startActivity(intent);
                                 }else{
                                     //验证失败
                                     progressDialog.dismiss();
-                                    final AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
+                                    final AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
                                     dialog.setTitle("Next");
                                     dialog.setMessage("Verification code input error, please reenter.");
                                     dialog.setCancelable(true);
@@ -162,14 +157,6 @@ public class RegisterActivity extends BaseActivity {
                                 }
                             }
                         });
-            }
-        });
-
-        intentLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
     }

@@ -4,16 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
 import com.nefu.freebox.R;
 import com.nefu.freebox.bean.BaseActivity;
 import com.nefu.freebox.entity.User;
@@ -41,7 +37,7 @@ public class RegisterActivity2 extends BaseActivity {
     }
 
     private void initView(){
-        number = getIntent().getStringExtra(RegisterActivity.MOBILE_NUMBER);
+        number = getIntent().getStringExtra(MOBILE_NUMBER);
         textInputLayoutPw = findViewById(R.id.activity_register2_til_pw);
         textInputLayoutPw2 = findViewById(R.id.activity_register2_til_pw2);
         signup = findViewById(R.id.bt_signup);

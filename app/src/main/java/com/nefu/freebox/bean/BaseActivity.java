@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 
 import cn.bmob.sms.BmobSMS;
@@ -18,9 +19,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static final String MOBILE_NUMBER = "mobile_number";
 
-    public final static int LOGGED = 1;
-    public final static int NOT_LOGIN = 0;
-    public static int LOGIN_STATUS = NOT_LOGIN;
+    public static boolean LOGIN_STATUS = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,4 +43,5 @@ public class BaseActivity extends AppCompatActivity {
         Bmob.initialize(this, "16459bfa83c3768e54925e69a3947512");
         BmobSMS.initialize(this, "16459bfa83c3768e54925e69a3947512");
     }
+
 }

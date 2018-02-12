@@ -24,4 +24,6 @@
     <string name="intent_login">Already a member? Login</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="ok">OK</string>
 </resources>
