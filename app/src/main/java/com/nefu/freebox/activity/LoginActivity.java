@@ -96,6 +96,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void done(List<User> list, BmobException e) {
                         if(e == null){
+                            Log.i(TAG, "done: 共"+list.size());
                             user = list.get(0);
                             if(user.getPassword().equals(password)){
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -107,6 +108,7 @@ public class LoginActivity extends BaseActivity {
                                 editor.apply();
                                 finish();
                             }else{
+                                Log.i(TAG, "done: 共"+list.size());
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                                 dialog.setTitle("Login");
                                 dialog.setMessage("Mobile number or password input error. Please reenter.");

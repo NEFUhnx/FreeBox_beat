@@ -1,14 +1,19 @@
 package com.nefu.freebox.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +37,8 @@ import cn.bmob.v3.listener.FindListener;
 
 
 public class ForgotPasswordActivity extends BaseActivity {
+
+    private static final String TAG = "ForgotPasswordActivity";
 
     private TextInputLayout textInputLayoutNo;
     private TextInputLayout textInputLayoutCode;
@@ -61,64 +68,12 @@ public class ForgotPasswordActivity extends BaseActivity {
             //获取验证码
             @Override
             public void onClick(View view) {
-                //获取手机号码并检测
-                number = textInputLayoutNo.getEditText().getText().toString();
-                if(!isMobile(number)){
-                    textInputLayoutNo.setError("Please input a correct mobile number.");
-                }else{
-                    textInputLayoutNo.setErrorEnabled(false);
-                    BmobQuery<User> query = new BmobQuery<User>();
-                    query.addWhereEqualTo("mobileNumber", number);
-                    query.findObjects(new FindListener<User>() {
-                        @Override
-                        public void done(List<User> list, cn.bmob.v3.exception.BmobException e) {
-                            if(e == null){
-                                BmobSMS.requestSMSCode(ForgotPasswordActivity.this, number, "Code", new RequestSMSCodeListener(){
-                                    @Override
-                                    public void done(Integer integer, BmobException e) {
-                                        if(e == null){
-                                            //发送成功，按钮不可点击变为灰色
-                                            Log.i("bmob", "短信id：" + integer);//用于查询本次短信发送详情
-                                            bt_verify.setClickable(false);
-                                            bt_verify.setBackgroundColor(Color.GRAY);
-                                            Toast.makeText(ForgotPasswordActivity.this,
-                                                    "Verification code has been sent, valid for 10 minutes",
-                                                    Toast.LENGTH_LONG).show();
-                                            //倒计时1分钟
-                                            new CountDownTimer(60000,1000){
-                                                @Override
-                                                public void onTick(long l) {
-                                                    bt_verify.setText(l/1000 + "s");
-                                                }
-
-                                                @Override
-                                                public void onFinish() {
-                                                    bt_verify.setClickable(true);
-                                                    bt_verify.setBackgroundColor(getResources().getColor(R.color.colorButton));
-                                                    bt_verify.setText("resend");
-                                                }
-                                            }.start();
-                                        }else{
-                                            Toast.makeText(ForgotPasswordActivity.this,
-                                                    "Send failed. please check the network connection.",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                            }else{
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
-                                dialog.setTitle("Reset password");
-                                dialog.setMessage("The mobile number is not registered.");
-                                dialog.setCancelable(true);
-                                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                    }
-                                });
-                                dialog.show();
-                            }
-                        }
-                    });
+                int permissionCheck = ContextCompat.checkSelfPermission(ForgotPasswordActivity.this, Manifest.permission.READ_PHONE_STATE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ForgotPasswordActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                } else {
+                    //TODO
+                    checkMobileNumber();
                 }
             }
         });
@@ -175,5 +130,82 @@ public class ForgotPasswordActivity extends BaseActivity {
             //matches():字符串是否在给定的正则表达式匹配
             return number.matches(num);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                    finish();
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
+
+    private void checkMobileNumber(){
+        //获取手机号码并检测
+        number = textInputLayoutNo.getEditText().getText().toString();
+        if(!isMobile(number)){
+            textInputLayoutNo.setError("Please input a correct mobile number.");
+        }else{
+            textInputLayoutNo.setErrorEnabled(false);
+            BmobQuery<User> query = new BmobQuery<User>();
+            query.addWhereEqualTo("mobileNumber", number);
+            query.findObjects(new FindListener<User>() {
+                @Override
+                public void done(List<User> list, cn.bmob.v3.exception.BmobException e) {
+                    if(e == null){
+                        sendSMSCode();
+                    }else{
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
+                        dialog.setTitle("Reset password");
+                        dialog.setMessage("The mobile number is not registered.");
+                        dialog.setCancelable(true);
+                        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void sendSMSCode(){
+        BmobSMS.requestSMSCode(ForgotPasswordActivity.this, number, "Code", new RequestSMSCodeListener(){
+            @Override
+            public void done(Integer integer, BmobException e) {
+                if(e == null){
+                    //发送成功，按钮不可点击变为灰色
+                    Log.i("bmob", "短信id：" + integer);//用于查询本次短信发送详情
+                    bt_verify.setClickable(false);
+                    bt_verify.setBackgroundColor(Color.GRAY);
+                    Toast.makeText(ForgotPasswordActivity.this,
+                            "Verification code has been sent, valid for 10 minutes",
+                            Toast.LENGTH_LONG).show();
+                    //倒计时1分钟
+                    new CountDownTimer(60000,1000){
+                        @Override
+                        public void onTick(long l) {
+                            bt_verify.setText(l/1000 + "s");
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            bt_verify.setClickable(true);
+                            bt_verify.setBackgroundColor(getResources().getColor(R.color.colorButton));
+                            bt_verify.setText("resend");
+                        }
+                    }.start();
+                }else{
+                    Toast.makeText(ForgotPasswordActivity.this,
+                            "Send failed. please check the network connection.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

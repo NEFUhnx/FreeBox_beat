@@ -12,10 +12,6 @@
             android:icon="@mipmap/message"
             android:title="@string/nav_message"/>
         <item
-            android:id="@+id/nav_order"
-            android:icon="@mipmap/order"
-            android:title="@string/nav_order"/>
-        <item
             android:id="@+id/nav_myhouse"
             android:icon="@mipmap/my_house"
             android:title="@string/nav_my_house"/>

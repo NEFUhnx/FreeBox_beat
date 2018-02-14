@@ -26,4 +26,9 @@
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password</string>
     <string name="ok">OK</string>
+
+    <string name="name">NAME</string>
+    <string name="address">ADDRESS</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="logoff">Log off</string>
 </resources>

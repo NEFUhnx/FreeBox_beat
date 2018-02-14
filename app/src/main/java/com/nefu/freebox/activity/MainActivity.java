@@ -1,6 +1,10 @@
 package com.nefu.freebox.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
@@ -10,23 +14,45 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nefu.freebox.bean.BaseActivity;
 import com.nefu.freebox.R;
+import com.nefu.freebox.entity.User;
 import com.nefu.freebox.fragment.History_Fragment;
 import com.nefu.freebox.fragment.Home_Fragment;
 import com.nefu.freebox.fragment.Msg_Fragment;
 import com.nefu.freebox.fragment.Myhouse_Fragment;
-import com.nefu.freebox.fragment.Order_Fragment;
 import com.nefu.freebox.fragment.Stars_Fragment;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
+import java.util.prefs.Preferences;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
+    private View headerView;
+    private CircleImageView navImage;
+    private TextView userName;
+    private TextView mobile;
     private Fragment currentFragment = null;
+
+    private SharedPreferences pref;
+    private String mobile_number;
+    private User user;
 
     private long mExitTime = 0;
 
@@ -34,8 +60,17 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        initView();
+        setListener();
+    }
+
+    private void initView(){
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        navImage = headerView.findViewById(R.id.nav_image);
+        userName = headerView.findViewById(R.id.nav_username);
+        mobile = headerView.findViewById(R.id.nav_mobile);
         if(currentFragment == null){
             currentFragment = Home_Fragment.newInstance();
             replaceFragment(currentFragment);
@@ -43,6 +78,26 @@ public class MainActivity extends BaseActivity {
         navigationView.setCheckedItem(R.id.nav_home);
         NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
         navigationMenuView.setVerticalScrollBarEnabled(false);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        mobile_number = pref.getString("MOBILE_NUMBER", "");
+
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.addWhereEqualTo("mobileNumber", mobile_number);
+        query.findObjects(new FindListener<User>() {
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if(e == null){
+                    user = list.get(0);
+                    userName.setText(user.getMobileNumber());
+                }else{
+
+                }
+            }
+        });
+    }
+
+    private void setListener(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -53,10 +108,6 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.nav_msg:
                         currentFragment = Msg_Fragment.newInstance();
-                        replaceFragment(currentFragment);
-                        break;
-                    case R.id.nav_order:
-                        currentFragment = Order_Fragment.newInstance();
                         replaceFragment(currentFragment);
                         break;
                     case R.id.nav_myhouse:
@@ -83,6 +134,14 @@ public class MainActivity extends BaseActivity {
                 }
                 mDrawerLayout.closeDrawers();
                 return true;
+            }
+        });
+
+        navImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PersonActivity.class);
+                startActivity(intent);
             }
         });
     }
