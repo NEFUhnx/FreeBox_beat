@@ -104,8 +104,9 @@ public class PersonActivity extends AppCompatActivity {
                     if (user.getAddress() != null){
                         textInputLayoutAdd.getEditText().setText(user.getAddress());
                     }
-
-                    Glide.with(PersonActivity.this).load(user.getImage().getUrl()).into(imageView);
+                    if (user.getImage() != null){
+                        Glide.with(PersonActivity.this).load(user.getImage().getUrl()).into(imageView);
+                    }
                 }
             }
         });
