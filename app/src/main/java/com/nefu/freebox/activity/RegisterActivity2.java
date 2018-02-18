@@ -55,6 +55,9 @@ public class RegisterActivity2 extends BaseActivity {
                     Log.i(TAG, "onClick: -----------------------------------");
                     User user = new User();
                     user.setMobileNumber(number);
+                    user.setName(number);
+                    user.setImage(null);
+                    user.setAddress("");
                     user.setPassword(password);
                     user.save(new SaveListener<String>() {
                         @Override

@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -42,7 +44,6 @@ import cn.bmob.v3.listener.FindListener;
 public class RegisterActivity extends BaseActivity {
 
     private static final String TAG = "RegisterActivity";
-    private int registered = 0;
 
     private TextInputLayout textInputLayoutNo;
     private TextInputLayout textInputLayoutCode;
@@ -67,6 +68,11 @@ public class RegisterActivity extends BaseActivity {
         bt_verify = findViewById(R.id.bt_verify);
         bt_next = findViewById(R.id.bt_next);
         intentLogin = findViewById(R.id.link_login);
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+        if (!pref.getString("MOBILE_NUMBER", "").equals("")){
+            textInputLayoutNo.getEditText().setText(pref.getString("MOBILE_NUMBER", ""));
+        }
     }
 
     private void setListener(){

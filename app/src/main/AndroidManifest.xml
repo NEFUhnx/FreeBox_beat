@@ -52,6 +52,7 @@
             android:theme="@style/LoginTheme" />
         <activity android:name=".activity.PersonActivity"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+        <activity android:name=".activity.Myhouse_issueActivity" />
     </application>
 
 </manifest>

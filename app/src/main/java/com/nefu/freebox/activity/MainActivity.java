@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nefu.freebox.bean.BaseActivity;
 import com.nefu.freebox.R;
 import com.nefu.freebox.entity.User;
@@ -51,8 +52,10 @@ public class MainActivity extends BaseActivity {
     private Fragment currentFragment = null;
 
     private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     private String mobile_number;
     private User user;
+    private String nav_image;
 
     private long mExitTime = 0;
 
@@ -80,8 +83,15 @@ public class MainActivity extends BaseActivity {
         navigationMenuView.setVerticalScrollBarEnabled(false);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pref.edit();
         mobile_number = pref.getString("MOBILE_NUMBER", "");
-
+        nav_image = pref.getString("NAV_IMAGE", "");
+        mobile.setText(mobile_number);
+        if (!nav_image.equals("")){
+            Glide.with(MainActivity.this).load(nav_image).into(navImage);
+        }else{
+            loadNavImage();
+        }
         BmobQuery<User> query = new BmobQuery<User>();
         query.addWhereEqualTo("mobileNumber", mobile_number);
         query.findObjects(new FindListener<User>() {
@@ -89,9 +99,33 @@ public class MainActivity extends BaseActivity {
             public void done(List<User> list, BmobException e) {
                 if(e == null){
                     user = list.get(0);
-                    userName.setText(user.getMobileNumber());
+                    if ((user.getName() == null) || user.getName().equals("")){
+                        userName.setText(mobile_number);
+                    }else{
+                        userName.setText(user.getName());
+                    }
                 }else{
+                    Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
 
+    private void loadNavImage(){
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.addWhereEqualTo("mobileNumber", mobile_number);
+        query.findObjects(new FindListener<User>() {
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if(e == null){
+                    user = list.get(0);
+                    if (user.getImage() != null){
+                        Glide.with(MainActivity.this).load(user.getImage().getUrl()).into(navImage);
+                        editor.putString("NAV_IMAGE", "");
+                        editor.apply();
+                    }
+                }else{
+                    Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });

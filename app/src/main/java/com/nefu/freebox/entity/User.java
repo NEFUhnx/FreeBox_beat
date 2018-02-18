@@ -11,7 +11,6 @@ public class User extends BmobObject {
 
     private String mobileNumber;
     private String password;
-    private Integer userImg;
     private String name;
     private String address;
     private BmobFile image;
@@ -34,14 +33,6 @@ public class User extends BmobObject {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Integer getUserImg() {
-        return userImg;
-    }
-
-    public void setUserImg(Integer userImg) {
-        this.userImg = userImg;
     }
 
     public String getName() {

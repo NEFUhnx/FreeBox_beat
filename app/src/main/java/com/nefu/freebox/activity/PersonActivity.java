@@ -1,8 +1,13 @@
 package com.nefu.freebox.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,16 +15,35 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nefu.freebox.R;
+import com.nefu.freebox.entity.User;
 
+import java.io.File;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonActivity extends AppCompatActivity {
@@ -37,6 +61,8 @@ public class PersonActivity extends AppCompatActivity {
 
     private SharedPreferences pref;
     private String number;
+    private String imgPath = null;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +81,98 @@ public class PersonActivity extends AppCompatActivity {
         bt_logoff = findViewById(R.id.bt_logoff);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         number = pref.getString("MOBILE_NUMBER", "");
+        textInputLayoutMobile.getEditText().setText(number);
+        textInputLayoutMobile.getEditText().setEnabled(false);
+        Toolbar toolbar = findViewById(R.id.toolbar_person);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Personal Information");
+        }
+
+        BmobQuery<User> query = new BmobQuery<>();
+        query.addWhereEqualTo("mobileNumber", number);
+        query.findObjects(new FindListener<User>(){
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e == null){
+                    user = list.get(0);
+                    if (user.getName() != null){
+                        textInputLayoutName.getEditText().setText(user.getName());
+                    }
+                    if (user.getAddress() != null){
+                        textInputLayoutAdd.getEditText().setText(user.getAddress());
+                    }
+
+                    Glide.with(PersonActivity.this).load(user.getImage().getUrl()).into(imageView);
+                }
+            }
+        });
     }
 
     private void setListener(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseImage();
+                int permissionCheck = ContextCompat.checkSelfPermission(PersonActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PersonActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    //TODO
+                    chooseImage();
+                }
             }
         });
+
+        bt_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PersonActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
+                dialog.setTitle("Log off");
+                dialog.setMessage("Are you sure you want to quit the login?");
+                dialog.setCancelable(true);
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(PersonActivity.this);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.clear();
+                        editor.apply();
+                        Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                }else{
+                    chooseImage();
+                }
+                break;
+        }
     }
 
     private void chooseImage(){
@@ -112,6 +221,7 @@ public class PersonActivity extends AppCompatActivity {
             }
             cursor.close();
         }
+        imgPath = path;
         return path;
     }
 
@@ -122,5 +232,79 @@ public class PersonActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.person_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.save:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
+                dialog.setTitle("Save");
+                dialog.setMessage("Confirm the preservation of personal information?");
+                dialog.setCancelable(true);
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
+                        progressDialog.setTitle("Upload");
+                        progressDialog.setMessage("uploading...");
+                        progressDialog.show();
+                        final String name = textInputLayoutName.getEditText().getText().toString();
+                        final String address = textInputLayoutAdd.getEditText().getText().toString();
+                        final BmobFile bmobFile = new BmobFile(new File(imgPath));
+                        BmobQuery<User> query = new BmobQuery<>();
+                        query.addWhereEqualTo("mobileNumber", number);
+                        query.findObjects(new FindListener<User>(){
+                            @Override
+                            public void done(List<User> list, BmobException e) {
+                                if (e == null){
+                                    user = list.get(0);
+                                    user.setName(name);
+                                    user.setAddress(address);
+                                    user.setImage(bmobFile);
+                                    bmobFile.uploadblock(new UploadFileListener() {
+                                        @Override
+                                        public void done(BmobException e) {
+                                            if (e == null){
+                                                user.update(user.getObjectId(), new UpdateListener() {
+                                                    @Override
+                                                    public void done(BmobException e) {
+                                                        if (e == null){
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
+                                                        }else{
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
+                                                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

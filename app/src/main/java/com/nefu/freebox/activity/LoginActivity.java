@@ -77,7 +77,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View view) {
                 final String number = textInputLayoutNo.getEditText().getText().toString();
                 final String password = textInputLayoutPw.getEditText().getText().toString();
-                String password2 = null;
                 if(!isMobile(number)){
                     textInputLayoutNo.setError("Please input a mobile number.");
                     return;
@@ -90,6 +89,9 @@ public class LoginActivity extends BaseActivity {
                 }else{
                     textInputLayoutPw.setErrorEnabled(false);
                 }
+                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle("Login");
+                progressDialog.setMessage("Logging...");
                 BmobQuery<User> query = new BmobQuery<User>();
                 query.addWhereEqualTo("mobileNumber", number);
                 query.findObjects(new FindListener<User>() {
@@ -99,8 +101,10 @@ public class LoginActivity extends BaseActivity {
                             Log.i(TAG, "done: 共"+list.size());
                             user = list.get(0);
                             if(user.getPassword().equals(password)){
+                                progressDialog.show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                progressDialog.dismiss();
                                 editor = pref.edit();
                                 editor.putBoolean("LOGIN_STATUS", true);
                                 editor.putString("MOBILE_NUMBER", number);
@@ -108,6 +112,7 @@ public class LoginActivity extends BaseActivity {
                                 editor.apply();
                                 finish();
                             }else{
+                                progressDialog.dismiss();
                                 Log.i(TAG, "done: 共"+list.size());
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                                 dialog.setTitle("Login");
@@ -123,6 +128,7 @@ public class LoginActivity extends BaseActivity {
                             }
                             Log.i(TAG, "onClick: --------------------" + list.get(0).getPassword());
                         }else{
+                            progressDialog.dismiss();
                             AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
                             dialog.setTitle("Login");
                             dialog.setMessage("Mobile number input error. Please reenter.");
