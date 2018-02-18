@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -58,6 +59,8 @@ public class PersonActivity extends AppCompatActivity {
     private TextInputLayout textInputLayoutAdd;
     private Button bt_reset;
     private Button bt_logoff;
+    private EditText etAddress;
+    private EditText etName;
 
     private SharedPreferences pref;
     private String number;
@@ -77,8 +80,11 @@ public class PersonActivity extends AppCompatActivity {
         textInputLayoutName = findViewById(R.id.id_name);
         textInputLayoutMobile = findViewById(R.id.id_mobile_number);
         textInputLayoutAdd = findViewById(R.id.id_address);
+        etAddress = findViewById(R.id.et_address);
+        etName = findViewById(R.id.et_name);
         bt_reset = findViewById(R.id.bt_reset_password);
         bt_logoff = findViewById(R.id.bt_logoff);
+
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         number = pref.getString("MOBILE_NUMBER", "");
         textInputLayoutMobile.getEditText().setText(number);
@@ -99,10 +105,10 @@ public class PersonActivity extends AppCompatActivity {
                 if (e == null){
                     user = list.get(0);
                     if (user.getName() != null){
-                        textInputLayoutName.getEditText().setText(user.getName());
+                        etName.setText(user.getName());
                     }
                     if (user.getAddress() != null){
-                        textInputLayoutAdd.getEditText().setText(user.getAddress());
+                        etAddress.setText(user.getAddress());
                     }
                     if (user.getImage() != null){
                         Glide.with(PersonActivity.this).load(user.getImage().getUrl()).into(imageView);
@@ -255,46 +261,11 @@ public class PersonActivity extends AppCompatActivity {
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
-                        progressDialog.setTitle("Upload");
-                        progressDialog.setMessage("uploading...");
-                        progressDialog.show();
-                        final String name = textInputLayoutName.getEditText().getText().toString();
-                        final String address = textInputLayoutAdd.getEditText().getText().toString();
-                        final BmobFile bmobFile = new BmobFile(new File(imgPath));
-                        BmobQuery<User> query = new BmobQuery<>();
-                        query.addWhereEqualTo("mobileNumber", number);
-                        query.findObjects(new FindListener<User>(){
-                            @Override
-                            public void done(List<User> list, BmobException e) {
-                                if (e == null){
-                                    user = list.get(0);
-                                    user.setName(name);
-                                    user.setAddress(address);
-                                    user.setImage(bmobFile);
-                                    bmobFile.uploadblock(new UploadFileListener() {
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null){
-                                                user.update(user.getObjectId(), new UpdateListener() {
-                                                    @Override
-                                                    public void done(BmobException e) {
-                                                        if (e == null){
-                                                            progressDialog.dismiss();
-                                                            Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
-                                                        }else{
-                                                            progressDialog.dismiss();
-                                                            Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
-                                                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                        if (imgPath == null){
+                            save1();
+                        }else{
+                            save2();
+                        }
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -307,5 +278,82 @@ public class PersonActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void save1(){
+        final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
+        progressDialog.setTitle("Upload");
+        progressDialog.setMessage("uploading...");
+        progressDialog.show();
+        final String name = etName.getText().toString();
+        final String address = etAddress.getText().toString();
+        BmobQuery<User> query = new BmobQuery<>();
+        query.addWhereEqualTo("mobileNumber", number);
+        query.findObjects(new FindListener<User>(){
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e == null){
+                    user = list.get(0);
+                    user.setName(name);
+                    user.setAddress(address);
+                    user.update(user.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null){
+                                progressDialog.dismiss();
+                                Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
+                            }else{
+                                progressDialog.dismiss();
+                                Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
+                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void save2(){
+        final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
+        progressDialog.setTitle("Upload");
+        progressDialog.setMessage("uploading...");
+        progressDialog.show();
+        final String name = etName.getText().toString();
+        final String address = etAddress.getText().toString();
+        final BmobFile bmobFile = new BmobFile(new File(imgPath));
+        BmobQuery<User> query = new BmobQuery<>();
+        query.addWhereEqualTo("mobileNumber", number);
+        query.findObjects(new FindListener<User>(){
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e == null){
+                    user = list.get(0);
+                    user.setName(name);
+                    user.setAddress(address);
+                    user.setImage(bmobFile);
+                    bmobFile.uploadblock(new UploadFileListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null){
+                                user.update(user.getObjectId(), new UpdateListener() {
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if (e == null){
+                                            progressDialog.dismiss();
+                                            Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            progressDialog.dismiss();
+                                            Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
+                                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 }
