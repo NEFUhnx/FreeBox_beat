@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.nefu.freebox.activity.HomeActivity;
 import com.nefu.freebox.entity.Home_MainItem;
 import com.nefu.freebox.R;
+import com.nefu.freebox.entity.House;
 
 import java.util.List;
 
@@ -23,26 +24,26 @@ import java.util.List;
 
 public class Adapter_Home_MainItem extends RecyclerView.Adapter<Adapter_Home_MainItem.ViewHolder> {
     private Context mContext;
-    private List<Home_MainItem> mItemList;
+    private List<House> mItemList;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         ImageView itemImage;
-        TextView itemName;
+        TextView itemTitle;
         TextView itemDescribe;
-        TextView itemPrice;
+        TextView itemRent;
 
         public ViewHolder(View view){
             super(view);
             cardView = (CardView) view;
             itemImage = (ImageView) view.findViewById(R.id.item_home_main_img);
-            itemName = (TextView) view.findViewById(R.id.item_home_main_name);
+            itemTitle = (TextView) view.findViewById(R.id.item_home_main_title);
             itemDescribe = (TextView) view.findViewById(R.id.item_home_main_describe);
-            itemPrice = (TextView) view.findViewById(R.id.item_home_main_price);
+            itemRent = (TextView) view.findViewById(R.id.item_home_main_rent);
         }
     }
 
-    public Adapter_Home_MainItem(List<Home_MainItem> itemList){
+    public Adapter_Home_MainItem(List<House> itemList){
         mItemList = itemList;
     }
 
@@ -57,10 +58,12 @@ public class Adapter_Home_MainItem extends RecyclerView.Adapter<Adapter_Home_Mai
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                Home_MainItem item = mItemList.get(position);
+                House item = mItemList.get(position);
                 Intent intent = new Intent(mContext, HomeActivity.class);
-                intent.putExtra(HomeActivity.ITEM_NAME, item.getHome_itemName());
-                intent.putExtra(HomeActivity.ITEM_IMAGE_ID, item.getHome_imageId());
+                intent.putExtra(HomeActivity.ITEM_OBJECT_ID, item.getObjectId());
+                intent.putExtra(HomeActivity.ITEM_TITLE, item.getTitle());
+                intent.putExtra(HomeActivity.ITEM_IMAGE, item.getImage().getUrl());
+                intent.putExtra(HomeActivity.ITEM_NUMBER, item.getMobileNumber());
                 mContext.startActivity(intent);
             }
         });
@@ -69,9 +72,12 @@ public class Adapter_Home_MainItem extends RecyclerView.Adapter<Adapter_Home_Mai
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Home_MainItem item = mItemList.get(position);
-        holder.itemName.setText(item.getHome_itemName());
-        Glide.with(mContext).load(item.getHome_imageId()).into(holder.itemImage);
+        House item = mItemList.get(position);
+        //待修改
+        holder.itemTitle.setText(item.getTitle());
+        Glide.with(mContext).load(item.getImage().getUrl()).into(holder.itemImage);
+        holder.itemDescribe.setText(item.getDescribe());
+        holder.itemRent.setText(item.getRent());
     }
 
     @Override

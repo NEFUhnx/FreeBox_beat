@@ -17,7 +17,7 @@
             android:id="@+id/activity_msg_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"/>
+            android:background="@color/white"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView

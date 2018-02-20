@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context="com.nefu.freebox.activity.ReleaseActivity">
 
     <android.support.design.widget.AppBarLayout
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_my_house_toolbar"
+            android:id="@+id/activity_release_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
@@ -31,36 +33,39 @@
             android:paddingRight="24dp">
 
             <ImageView
-                android:id="@+id/my_house_image"
+                android:id="@+id/release_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_title"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_title"
+                    android:id="@+id/release_et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/title" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_location"
+                    android:id="@+id/release_et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_rent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_rent"
+                    android:id="@+id/release_et_rent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -68,10 +73,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_house_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_house_area"
+                    android:id="@+id/release_et_house_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -79,10 +85,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_mobile"
+                    android:id="@+id/release_et_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
@@ -90,10 +97,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/release_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/my_house_et_describe"
+                    android:id="@+id/release_et_describe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
@@ -101,14 +109,14 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/bt_my_house"
+                android:id="@+id/bt_release"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:padding="12dp"
                 android:textColor="@color/white"
-                android:text="@string/save"/>
+                android:text="@string/release"/>
         </LinearLayout>
     </ScrollView>
 

@@ -17,6 +17,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -27,31 +28,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nefu.freebox.R;
 import com.nefu.freebox.bean.BaseActivity;
 import com.nefu.freebox.entity.House;
+import com.nefu.freebox.entity.User;
 
 import java.io.File;
+import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
-public class MyHouseActivity extends BaseActivity {
-
-    public static final String ITEM_OBJECT_ID = "item_object_id";
-    public static final String ITEM_TITLE = "item_title";
-    public static final String ITEM_IMAGE = "item_image";
-
-    private String itemObjectId;
+public class ReleaseActivity extends BaseActivity {
 
     private ImageView imageView;
     private TextInputEditText textTitle;
@@ -60,11 +57,10 @@ public class MyHouseActivity extends BaseActivity {
     private TextInputEditText textHouseArea;
     private TextInputEditText textMobileNumber;
     private TextInputEditText textDescribe;
-    private Button bt_MyHouse;
+    private Button bt_release;
 
     private SharedPreferences pref;
     private String mobile;
-    private String itemImage;
     private String imgPath = null;
 
     private House house = new House();
@@ -72,49 +68,27 @@ public class MyHouseActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_house);
+        setContentView(R.layout.activity_release);
         initView();
         setListener();
     }
 
     private void initView(){
-        Intent intent = getIntent();
-        itemObjectId = intent.getStringExtra(ITEM_OBJECT_ID);
-        itemImage = intent.getStringExtra(ITEM_IMAGE);
-        String itemTitle = intent.getStringExtra(ITEM_TITLE);
-
-        Toolbar toolbar = findViewById(R.id.activity_my_house_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_release_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
-            actionBar.setTitle(itemTitle);
+            actionBar.setTitle("Release");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        imageView = findViewById(R.id.my_house_image);
-        textTitle = findViewById(R.id.my_house_et_title);
-        textLocation = findViewById(R.id.my_house_et_location);
-        textRent = findViewById(R.id.my_house_et_rent);
-        textHouseArea = findViewById(R.id.my_house_et_house_area);
-        textMobileNumber = findViewById(R.id.my_house_et_mobile);
-        textDescribe = findViewById(R.id.my_house_et_describe);
-        bt_MyHouse = findViewById(R.id.bt_my_house);
-
-        Glide.with(MyHouseActivity.this).load(itemImage).into(imageView);
-        textTitle.setText(itemTitle);
-        BmobQuery<House> query = new BmobQuery<>();
-        query.getObject(itemObjectId, new QueryListener<House>() {
-            @Override
-            public void done(House house, BmobException e) {
-                if (e == null){
-                    textLocation.setText(house.getLocation());
-                    textRent.setText(house.getRent());
-                    textHouseArea.setText(house.getHouseArea());
-                    textMobileNumber.setText(house.getMobileNumber());
-                    textDescribe.setText(house.getDescribe());
-                }
-            }
-        });
-        textMobileNumber.setEnabled(false);
+        imageView = findViewById(R.id.release_image);
+        textTitle = findViewById(R.id.release_et_title);
+        textLocation = findViewById(R.id.release_et_location);
+        textRent = findViewById(R.id.release_et_rent);
+        textHouseArea = findViewById(R.id.release_et_house_area);
+        textMobileNumber = findViewById(R.id.release_et_mobile);
+        textDescribe = findViewById(R.id.release_et_describe);
+        bt_release = findViewById(R.id.bt_release);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         mobile = pref.getString("MOBILE_NUMBER", "");
@@ -126,9 +100,9 @@ public class MyHouseActivity extends BaseActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int permissionCheck = ContextCompat.checkSelfPermission(MyHouseActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                int permissionCheck = ContextCompat.checkSelfPermission(ReleaseActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MyHouseActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(ReleaseActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 } else {
                     //TODO
                     chooseImage();
@@ -136,23 +110,27 @@ public class MyHouseActivity extends BaseActivity {
             }
         });
 
-        bt_MyHouse.setOnClickListener(new View.OnClickListener() {
+        bt_release.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (imgPath == null){
+                    Toast.makeText(ReleaseActivity.this, "Please take a photo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (textTitle.getText().toString().equals("") || (textTitle.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input a title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "Please input a title", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textLocation.getText().toString().equals("") || (textLocation.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "Please input location", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textRent.getText().toString().equals("") || (textRent.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input rent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "Please input rent", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textHouseArea.getText().toString().equals("") || (textHouseArea.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input house area", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "Please input house area", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 house.setTitle(textTitle.getText().toString());
@@ -161,18 +139,14 @@ public class MyHouseActivity extends BaseActivity {
                 house.setHouseArea(textHouseArea.getText().toString());
                 house.setMobileNumber(textMobileNumber.getText().toString());
                 house.setDescribe(textDescribe.getText().toString());
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyHouseActivity.this);
-                dialog.setTitle("Save");
-                dialog.setMessage("Do you confirm the save the information?");
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ReleaseActivity.this);
+                dialog.setTitle("Release");
+                dialog.setMessage("Do you confirm the release of the house?");
                 dialog.setCancelable(true);
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (imgPath == null){
-                            save1();
-                        }else{
-                            save2();
-                        }
+                        Release();
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -186,28 +160,8 @@ public class MyHouseActivity extends BaseActivity {
         });
     }
 
-    private void save1(){
-        final ProgressDialog progressDialog = new ProgressDialog(MyHouseActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
-        progressDialog.show();
-        house.update(itemObjectId, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e == null){
-                    progressDialog.dismiss();
-                    Toast.makeText(MyHouseActivity.this, "Save successful", Toast.LENGTH_SHORT).show();
-                }else{
-                    progressDialog.dismiss();
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                }
-            }
-        });
-
-    }
-
-    private void save2(){
-        final ProgressDialog progressDialog = new ProgressDialog(MyHouseActivity.this);
+    private void Release(){
+        final ProgressDialog progressDialog = new ProgressDialog(ReleaseActivity.this);
         progressDialog.setTitle("Upload");
         progressDialog.setMessage("uploading...");
         progressDialog.show();
@@ -217,12 +171,12 @@ public class MyHouseActivity extends BaseActivity {
             @Override
             public void done(BmobException e) {
                 if (e == null){
-                    house.update(itemObjectId, new UpdateListener() {
+                    house.save(new SaveListener<String>() {
                         @Override
-                        public void done(BmobException e) {
-                            if(e == null){
+                        public void done(String s, BmobException e) {
+                            if (e == null){
                                 progressDialog.dismiss();
-                                Toast.makeText(MyHouseActivity.this, "Save successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ReleaseActivity.this, "Release successful", Toast.LENGTH_SHORT).show();
                             }else{
                                 progressDialog.dismiss();
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());

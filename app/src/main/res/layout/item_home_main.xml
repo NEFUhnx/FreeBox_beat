@@ -31,7 +31,7 @@
             android:layout_height="100dp">
 
             <TextView
-                android:id="@+id/item_home_main_name"
+                android:id="@+id/item_home_main_title"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,11 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/item_home_main_price"
+                android:id="@+id/item_home_main_rent"
                 android:layout_marginTop="0dp"
                 android:layout_marginStart="5dp"
-                android:text="Price"
-                android:textColor="@color/red"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

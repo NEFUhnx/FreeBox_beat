@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -34,6 +35,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nefu.freebox.R;
+import com.nefu.freebox.bean.Flyme;
+import com.nefu.freebox.bean.MIUI;
 import com.nefu.freebox.entity.User;
 
 import java.io.File;
@@ -47,11 +50,12 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.nefu.freebox.bean.BaseActivity.CHOOSE_PHOTO;
+
 public class PersonActivity extends AppCompatActivity {
 
     private static int output_X = 600;
     private static int output_Y = 600;
-    public static final int CHOOSE_PHOTO = 2;
 
     private CircleImageView imageView;
     private TextInputLayout textInputLayoutName;
@@ -71,6 +75,15 @@ public class PersonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+        if(MIUI.MIUISetStatusBarLightMode(this,true)){
+
+        }
+        else Flyme.FlymeSetStatusBarLightMode(this.getWindow(),true);
+
         initView();
         setListener();
     }

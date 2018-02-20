@@ -31,4 +31,18 @@
     <string name="address">ADDRESS</string>
     <string name="reset_password">Reset Password</string>
     <string name="logoff">Log off</string>
+
+    <string name="title">Title</string>
+    <string name="location">Location</string>
+    <string name="rent">Rent (￥/day)</string>
+    <string name="house_area">House Area (m²)</string>
+    <string name="describe">Describe</string>
+    <string name="release">Release</string>
+
+    <string name="home_rent">Rent</string>
+    <string name="home_house_area">House Area</string>
+    <string name="landlord">Landlord</string>
+    <string name="call">Call</string>
+
+    <string name="save">Save</string>
 </resources>

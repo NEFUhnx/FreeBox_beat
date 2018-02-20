@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
-            android:elevation="6dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/linearlayout_elevation"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true">
 
@@ -40,6 +41,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -54,21 +56,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Price"
+                    android:text="@string/home_rent"
                     android:textColor="@color/colorAccent"
-                    android:gravity="center_horizontal"
+                    android:gravity="start"
                     android:textSize="12sp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text="100￥/day"
+                    android:id="@+id/home_text_rent"
                     android:textSize="20sp"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:paddingStart="10dp"
                     android:layout_width="0dp"
-                    android:layout_weight="5"
+                    android:layout_weight="9"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -77,21 +79,67 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
                 <TextView
-                    android:text="Address"
+                    android:text="@string/location"
                     android:textColor="@color/colorAccent"
-                    android:gravity="center_horizontal"
+                    android:gravity="start"
                     android:textSize="12sp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text="@string/address_test"
+                    android:id="@+id/home_text_location"
                     android:textSize="16sp"
                     android:textColor="@color/textGrey"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:layout_width="0dp"
-                    android:layout_weight="5"
+                    android:layout_weight="9"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="@string/home_house_area"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="start"
+                    android:textSize="12sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_text_house_area"
+                    android:textSize="16sp"
+                    android:textColor="@color/textGrey"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="9"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="@string/describe"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="start"
+                    android:textSize="12sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_text_describe"
+                    android:textSize="16sp"
+                    android:textColor="@color/textGrey"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="9"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
@@ -101,36 +149,40 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
+        android:background="@drawable/linearlayout_elevation"
         android:layout_gravity="bottom">
 
-        <TextView
-            android:gravity="center"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_landlord"
+            android:theme="@style/Button.Borderless"
+            android:text="@string/landlord"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Landlord"/>
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:gravity="center"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_message"
+            android:theme="@style/Button.Borderless"
+            android:text="@string/nav_message"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Message"/>
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:gravity="center"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_call"
+            android:theme="@style/Button.Borderless"
+            android:text="@string/call"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Call"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:tooltipText="star"
         android:src="@mipmap/stars_white"
         app:layout_anchor="@id/activity_home_appBar"
         app:layout_anchorGravity="bottom|end"/>

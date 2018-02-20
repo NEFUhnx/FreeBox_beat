@@ -37,9 +37,9 @@ public class Adapter_History_Item extends RecyclerView.Adapter<Adapter_History_I
             super(view);
             cardView = (CardView) view;
             itemImage = (ImageView) view.findViewById(R.id.item_home_main_img);
-            itemName = (TextView) view.findViewById(R.id.item_home_main_name);
+            itemName = (TextView) view.findViewById(R.id.item_home_main_title);
             itemDescribe = (TextView) view.findViewById(R.id.item_home_main_describe);
-            itemPrice = (TextView) view.findViewById(R.id.item_home_main_price);
+            itemPrice = (TextView) view.findViewById(R.id.item_home_main_rent);
         }
     }
     public Adapter_History_Item(List<Home_MainItem> itemList){
@@ -60,8 +60,8 @@ public class Adapter_History_Item extends RecyclerView.Adapter<Adapter_History_I
                 int position = holder.getAdapterPosition();
                 Home_MainItem item = mItemList.get(position);
                 Intent intent = new Intent(mContext, HomeActivity.class);
-                intent.putExtra(HomeActivity.ITEM_NAME, item.getHome_itemName());
-                intent.putExtra(HomeActivity.ITEM_IMAGE_ID, item.getHome_imageId());
+                intent.putExtra(HomeActivity.ITEM_TITLE, item.getHome_itemName());
+                intent.putExtra(HomeActivity.ITEM_IMAGE, item.getHome_imageId());
                 mContext.startActivity(intent);
             }
         });

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,10 +21,15 @@ import android.widget.Toast;
 import com.nefu.freebox.adapter.Adapter_Home_MainItem;
 import com.nefu.freebox.entity.Home_MainItem;
 import com.nefu.freebox.R;
+import com.nefu.freebox.entity.House;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 
 /**
@@ -32,14 +38,14 @@ import java.util.Random;
 
 public class Home_Fragment extends Fragment {
 
-    private Home_MainItem[] items = new Home_MainItem[10];
-    private List<Home_MainItem> itemList = new ArrayList<>();
+    private AppCompatActivity activity;
+
+    private List<House> itemList = new ArrayList<>();
     private Adapter_Home_MainItem adapter;
     private SwipeRefreshLayout swipeRefresh;
 
     public static Home_Fragment newInstance(){
-        Home_Fragment fragment = new Home_Fragment();
-        return fragment;
+        return new Home_Fragment();
     }
 
     @Override
@@ -58,8 +64,8 @@ public class Home_Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar_home);
+        activity = (AppCompatActivity) getActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar_home);
         activity.setSupportActionBar(toolbar);
         ActionBar actionBar = activity.getSupportActionBar();
         if(actionBar != null){
@@ -67,15 +73,8 @@ public class Home_Fragment extends Fragment {
             actionBar.setTitle("Home");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
-
-        initItem();
-        RecyclerView recyclerView = (RecyclerView) activity.findViewById(R.id.fragment_home_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(activity, 1);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter_Home_MainItem(itemList);
-        recyclerView.setAdapter(adapter);
-
-        swipeRefresh = (SwipeRefreshLayout) activity.findViewById(R.id.home_main_refresh);
+        initItems();
+        swipeRefresh = activity.findViewById(R.id.home_main_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -103,8 +102,8 @@ public class Home_Fragment extends Fragment {
         return true;
     }
 
-    private void initItem(){
-        for(int i=0; i<items.length; i++){
+    private void initItems(){
+        /*for(int i=0; i<items.length; i++){
             items[i] = new Home_MainItem("Name"+i, R.mipmap.touxiang);
         }
         itemList.clear();
@@ -112,22 +111,35 @@ public class Home_Fragment extends Fragment {
             Random random = new Random();
             int index = random.nextInt(items.length);
             itemList.add(items[index]);
-        }
+        }*/
+        itemList.clear();
+        BmobQuery<House> query = new BmobQuery<>();
+        query.setLimit(10);
+        query.findObjects(new FindListener<House>() {
+            @Override
+            public void done(List<House> list, BmobException e) {
+                if (e == null) {
+                    itemList.addAll(list);
+                    RecyclerView recyclerView = activity.findViewById(R.id.fragment_home_recycler_view);
+                    GridLayoutManager layoutManager = new GridLayoutManager(activity, 1);
+                    recyclerView.setLayoutManager(layoutManager);
+                    adapter = new Adapter_Home_MainItem(itemList);
+                    recyclerView.setAdapter(adapter);
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
     }
 
     private void refreshItems(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    Thread.sleep(300);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
                 getActivity().runOnUiThread(new Runnable(){
                     @Override
                     public void run() {
-                        initItem();
+                        initItems();
                         adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }

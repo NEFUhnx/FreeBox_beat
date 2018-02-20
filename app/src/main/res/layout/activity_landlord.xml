@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.nefu.freebox.activity.PersonActivity">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_person"
+            android:id="@+id/toolbar_landlord"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"/>
@@ -37,7 +35,7 @@
                 android:layout_height="100dp"
                 android:gravity="center">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image"
+                    android:id="@+id/landlord_image"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_width="70dp"
@@ -53,9 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/et_name"
+                    android:id="@+id/landlord_et_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:enabled="false"
                     android:hint="@string/name"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -66,8 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/landlord_et_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:enabled="false"
                     android:hint="@string/mobile_number"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -78,30 +79,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/et_address"
+                    android:id="@+id/landlord_et_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:enabled="false"
                     android:hint="@string/address"/>
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/bt_reset_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:padding="12dp"
-                android:textColor="@color/white"
-                android:text="@string/reset_password"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/bt_logoff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
-                android:padding="12dp"
-                android:textColor="@color/white"
-                android:text="@string/logoff"/>
         </LinearLayout>
 
     </ScrollView>
