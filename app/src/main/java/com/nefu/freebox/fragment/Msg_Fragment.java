@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Msg_Fragment extends Fragment {
 
-    private Msg_Item[] items = new Msg_Item[5];
+    private Msg_Item[] items = new Msg_Item[1];
     private List<Msg_Item> itemList = new ArrayList<>();
     private Adapter_Msg_Item adapter;
     private SwipeRefreshLayout swipeRefresh;
@@ -58,7 +58,7 @@ public class Msg_Fragment extends Fragment {
         ActionBar actionBar = (ActionBar) activity.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Message");
+            actionBar.setTitle("消息");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
 
@@ -82,7 +82,7 @@ public class Msg_Fragment extends Fragment {
     private void initItem(){
         itemList.clear();
         for(int i=0; i<items.length; i++){
-            items[i] = new Msg_Item(R.mipmap.touxiang, "NAME", "NAME:MESSAGE");
+            items[i] = new Msg_Item(R.mipmap.touxiang, "JFX", "hnx.:text!");
             itemList.add(items[i]);
         }
     }

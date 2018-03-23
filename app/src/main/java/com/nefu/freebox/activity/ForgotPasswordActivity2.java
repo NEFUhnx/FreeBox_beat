@@ -72,10 +72,10 @@ public class ForgotPasswordActivity2 extends BaseActivity {
                                     public void done(BmobException e) {
                                         if(e == null){
                                             AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity2.this);
-                                            dialog.setTitle("Reset Password");
-                                            dialog.setMessage("Reset password successful.");
+                                            dialog.setTitle("重置密码");
+                                            dialog.setMessage("重置密码成功。");
                                             dialog.setCancelable(true);
-                                            dialog.setPositiveButton("Go Login", new DialogInterface.OnClickListener() {
+                                            dialog.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     Intent intent = new Intent(ForgotPasswordActivity2.this, LoginActivity.class);
@@ -94,10 +94,10 @@ public class ForgotPasswordActivity2 extends BaseActivity {
                 }else{
                     //两次输入密码不同，提示，不做任何处理
                     AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity2.this);
-                    dialog.setTitle("Reset password");
-                    dialog.setMessage("Different passwords for the two input. Please reenter it.");
+                    dialog.setTitle("重置密码");
+                    dialog.setMessage("两次输入的密码不相同，请重新输入。");
                     dialog.setCancelable(true);
-                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                         }

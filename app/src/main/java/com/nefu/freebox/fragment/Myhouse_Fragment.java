@@ -78,7 +78,7 @@ public class Myhouse_Fragment extends Fragment {
         ActionBar actionBar = (ActionBar) activity.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("My House");
+            actionBar.setTitle("我的发布");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
         refreshLayout = activity.findViewById(R.id.my_house_refresh);

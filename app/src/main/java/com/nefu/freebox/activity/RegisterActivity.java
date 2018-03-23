@@ -94,8 +94,8 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
-                progressDialog.setTitle("Next");
-                progressDialog.setMessage("Being verified...");
+                progressDialog.setTitle("下一步");
+                progressDialog.setMessage("正在验证...");
                 progressDialog.show();
                 verifyCode = textInputLayoutCode.getEditText().getText().toString();
                 BmobSMS.verifySmsCode(RegisterActivity.this, number, verifyCode,
@@ -113,9 +113,9 @@ public class RegisterActivity extends BaseActivity {
                                     progressDialog.dismiss();
                                     final AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
                                     dialog.setTitle("Next");
-                                    dialog.setMessage("Verification code input error, please reenter.");
+                                    dialog.setMessage("验证码输入错误, 请重新输入。");
                                     dialog.setCancelable(true);
-                                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                         }
@@ -176,13 +176,13 @@ public class RegisterActivity extends BaseActivity {
                         public void onFinish() {
                             bt_verify.setClickable(true);
                             bt_verify.setBackgroundColor(getResources().getColor(R.color.colorButton));
-                            bt_verify.setText("resend");
+                            bt_verify.setText("重新发送");
                         }
                     }.start();
                 }else{
                     Log.i(TAG, "done: -----------------------");
                     Toast.makeText(RegisterActivity.this,
-                            "Send failed. please check the network connection.",
+                            "发送失败，请检查网络连接。",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -193,7 +193,7 @@ public class RegisterActivity extends BaseActivity {
         //获取手机号码并检测
         number = textInputLayoutNo.getEditText().getText().toString();
         if(!isMobile(number)){
-            textInputLayoutNo.setError("Please input a correct mobile number.");
+            textInputLayoutNo.setError("请输入正确的手机号码");
         }else{
             textInputLayoutNo.setErrorEnabled(false);
             BmobQuery<User> query = new BmobQuery<User>();
@@ -205,10 +205,10 @@ public class RegisterActivity extends BaseActivity {
                         User user = list.get(0);
                         Log.i(TAG, "done: ---------------------" + user.getObjectId());
                         AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
-                        dialog.setTitle("Register");
-                        dialog.setMessage("The mobile number has been registered.");
+                        dialog.setTitle("注册");
+                        dialog.setMessage("该手机号已注册");
                         dialog.setCancelable(true);
-                        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -228,7 +228,7 @@ public class RegisterActivity extends BaseActivity {
             case 1:
                 if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
                     finish();
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }
         }
     }

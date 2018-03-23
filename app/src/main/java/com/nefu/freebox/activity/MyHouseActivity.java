@@ -140,19 +140,19 @@ public class MyHouseActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (textTitle.getText().toString().equals("") || (textTitle.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input a title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyHouseActivity.this, "请输入标题", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textLocation.getText().toString().equals("") || (textLocation.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyHouseActivity.this, "请输入地址", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textRent.getText().toString().equals("") || (textRent.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input rent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyHouseActivity.this, "请输入租金", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textHouseArea.getText().toString().equals("") || (textHouseArea.getText() == null)){
-                    Toast.makeText(MyHouseActivity.this, "Please input house area", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyHouseActivity.this, "请输入房屋面积", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 house.setTitle(textTitle.getText().toString());
@@ -162,10 +162,10 @@ public class MyHouseActivity extends BaseActivity {
                 house.setMobileNumber(textMobileNumber.getText().toString());
                 house.setDescribe(textDescribe.getText().toString());
                 AlertDialog.Builder dialog = new AlertDialog.Builder(MyHouseActivity.this);
-                dialog.setTitle("Save");
-                dialog.setMessage("Do you confirm the save the information?");
+                dialog.setTitle("保存");
+                dialog.setMessage("确认要保存？");
                 dialog.setCancelable(true);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (imgPath == null){
@@ -175,7 +175,7 @@ public class MyHouseActivity extends BaseActivity {
                         }
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -188,15 +188,15 @@ public class MyHouseActivity extends BaseActivity {
 
     private void save1(){
         final ProgressDialog progressDialog = new ProgressDialog(MyHouseActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
+        progressDialog.setTitle("上传");
+        progressDialog.setMessage("上传中...");
         progressDialog.show();
         house.update(itemObjectId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if(e == null){
                     progressDialog.dismiss();
-                    Toast.makeText(MyHouseActivity.this, "Save successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyHouseActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                 }else{
                     progressDialog.dismiss();
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
@@ -208,8 +208,8 @@ public class MyHouseActivity extends BaseActivity {
 
     private void save2(){
         final ProgressDialog progressDialog = new ProgressDialog(MyHouseActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
+        progressDialog.setTitle("上传");
+        progressDialog.setMessage("上传中...");
         progressDialog.show();
         final BmobFile bmobFile = new BmobFile(new File(imgPath));
         house.setImage(bmobFile);
@@ -222,7 +222,7 @@ public class MyHouseActivity extends BaseActivity {
                         public void done(BmobException e) {
                             if(e == null){
                                 progressDialog.dismiss();
-                                Toast.makeText(MyHouseActivity.this, "Save successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyHouseActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                             }else{
                                 progressDialog.dismiss();
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
@@ -239,7 +239,7 @@ public class MyHouseActivity extends BaseActivity {
         switch (requestCode){
             case 1:
                 if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }else{
                     chooseImage();
                 }
@@ -303,7 +303,7 @@ public class MyHouseActivity extends BaseActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             imageView.setImageBitmap(bitmap);
         }else{
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
         }
     }
 

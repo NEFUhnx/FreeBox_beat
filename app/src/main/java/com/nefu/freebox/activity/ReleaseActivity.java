@@ -78,7 +78,7 @@ public class ReleaseActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
-            actionBar.setTitle("Release");
+            actionBar.setTitle("发布");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         imageView = findViewById(R.id.release_image);
@@ -114,23 +114,23 @@ public class ReleaseActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (imgPath == null){
-                    Toast.makeText(ReleaseActivity.this, "Please take a photo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "请选择一张照片", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textTitle.getText().toString().equals("") || (textTitle.getText() == null)){
-                    Toast.makeText(ReleaseActivity.this, "Please input a title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "请输入标题", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textLocation.getText().toString().equals("") || (textLocation.getText() == null)){
-                    Toast.makeText(ReleaseActivity.this, "Please input location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "请输入地址", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textRent.getText().toString().equals("") || (textRent.getText() == null)){
-                    Toast.makeText(ReleaseActivity.this, "Please input rent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "请输入租金", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (textHouseArea.getText().toString().equals("") || (textHouseArea.getText() == null)){
-                    Toast.makeText(ReleaseActivity.this, "Please input house area", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseActivity.this, "请输入房屋面积", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 house.setTitle(textTitle.getText().toString());
@@ -140,16 +140,16 @@ public class ReleaseActivity extends BaseActivity {
                 house.setMobileNumber(textMobileNumber.getText().toString());
                 house.setDescribe(textDescribe.getText().toString());
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ReleaseActivity.this);
-                dialog.setTitle("Release");
-                dialog.setMessage("Do you confirm the release of the house?");
+                dialog.setTitle("发布");
+                dialog.setMessage("确认要发布该房屋?");
                 dialog.setCancelable(true);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Release();
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -162,8 +162,8 @@ public class ReleaseActivity extends BaseActivity {
 
     private void Release(){
         final ProgressDialog progressDialog = new ProgressDialog(ReleaseActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
+        progressDialog.setTitle("上传");
+        progressDialog.setMessage("上传中...");
         progressDialog.show();
         final BmobFile bmobFile = new BmobFile(new File(imgPath));
         house.setImage(bmobFile);
@@ -176,7 +176,7 @@ public class ReleaseActivity extends BaseActivity {
                         public void done(String s, BmobException e) {
                             if (e == null){
                                 progressDialog.dismiss();
-                                Toast.makeText(ReleaseActivity.this, "Release successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ReleaseActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                             }else{
                                 progressDialog.dismiss();
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
@@ -193,7 +193,7 @@ public class ReleaseActivity extends BaseActivity {
         switch (requestCode){
             case 1:
                 if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }else{
                     chooseImage();
                 }
@@ -257,7 +257,7 @@ public class ReleaseActivity extends BaseActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             imageView.setImageBitmap(bitmap);
         }else{
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
         }
     }
 

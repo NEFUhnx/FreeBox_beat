@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.nefu.freebox.adapter.Adapter_History_Item;
 import com.nefu.freebox.entity.Home_MainItem;
 import com.nefu.freebox.R;
+import com.nefu.freebox.entity.House;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,7 @@ import java.util.List;
 
 public class History_Fragment extends Fragment {
 
-    private Home_MainItem[] items = new Home_MainItem[2];
-    private List<Home_MainItem> itemList = new ArrayList<>();
+    private List<House> itemList = new ArrayList<>();
     private Adapter_History_Item adapter;
 
     public static History_Fragment newInstance(){
@@ -56,7 +56,7 @@ public class History_Fragment extends Fragment {
         ActionBar actionBar = (ActionBar) activity.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("History");
+            actionBar.setTitle("历史记录");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
         initItems();
@@ -69,9 +69,6 @@ public class History_Fragment extends Fragment {
     }
 
     private void initItems(){
-        items[0] = new Home_MainItem("name", R.mipmap.touxiang);
-        items[1] = new Home_MainItem("name1", R.mipmap.touxiang);
-        itemList.add(items[0]);
-        itemList.add(items[1]);
+
     }
 }

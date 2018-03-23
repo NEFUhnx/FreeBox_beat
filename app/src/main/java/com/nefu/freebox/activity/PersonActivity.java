@@ -107,7 +107,7 @@ public class PersonActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Personal Information");
+            actionBar.setTitle("个人信息");
         }
 
         BmobQuery<User> query = new BmobQuery<>();
@@ -157,10 +157,10 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
-                dialog.setTitle("Log off");
-                dialog.setMessage("Are you sure you want to quit the login?");
+                dialog.setTitle("注销");
+                dialog.setMessage("您确定要退出登录?");
                 dialog.setCancelable(true);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(PersonActivity.this);
@@ -171,7 +171,7 @@ public class PersonActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -187,7 +187,7 @@ public class PersonActivity extends AppCompatActivity {
         switch (requestCode){
             case 1:
                 if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }else{
                     chooseImage();
                 }
@@ -250,7 +250,7 @@ public class PersonActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             imageView.setImageBitmap(bitmap);
         }else{
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -268,10 +268,10 @@ public class PersonActivity extends AppCompatActivity {
                 break;
             case R.id.save:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PersonActivity.this);
-                dialog.setTitle("Save");
-                dialog.setMessage("Confirm the preservation of personal information?");
+                dialog.setTitle("保存");
+                dialog.setMessage("确认保存个人信息?");
                 dialog.setCancelable(true);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (imgPath == null){
@@ -281,7 +281,7 @@ public class PersonActivity extends AppCompatActivity {
                         }
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -295,8 +295,8 @@ public class PersonActivity extends AppCompatActivity {
 
     private void save1(){
         final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
+        progressDialog.setTitle("上传");
+        progressDialog.setMessage("上传中...");
         progressDialog.show();
         final String name = etName.getText().toString();
         final String address = etAddress.getText().toString();
@@ -314,10 +314,10 @@ public class PersonActivity extends AppCompatActivity {
                         public void done(BmobException e) {
                             if (e == null){
                                 progressDialog.dismiss();
-                                Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                             }else{
                                 progressDialog.dismiss();
-                                Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
                                 Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                             }
                         }
@@ -329,8 +329,8 @@ public class PersonActivity extends AppCompatActivity {
 
     private void save2(){
         final ProgressDialog progressDialog = new ProgressDialog(PersonActivity.this);
-        progressDialog.setTitle("Upload");
-        progressDialog.setMessage("uploading...");
+        progressDialog.setTitle("上传");
+        progressDialog.setMessage("上传中...");
         progressDialog.show();
         final String name = etName.getText().toString();
         final String address = etAddress.getText().toString();
@@ -354,10 +354,10 @@ public class PersonActivity extends AppCompatActivity {
                                     public void done(BmobException e) {
                                         if (e == null){
                                             progressDialog.dismiss();
-                                            Toast.makeText(PersonActivity.this, "save successful", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                                         }else{
                                             progressDialog.dismiss();
-                                            Toast.makeText(PersonActivity.this, "save failed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
                                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                                         }
                                     }

@@ -78,20 +78,20 @@ public class LoginActivity extends BaseActivity {
                 final String number = textInputLayoutNo.getEditText().getText().toString();
                 final String password = textInputLayoutPw.getEditText().getText().toString();
                 if(!isMobile(number)){
-                    textInputLayoutNo.setError("Please input a mobile number.");
+                    textInputLayoutNo.setError("请输入手机号");
                     return;
                 }else{
                     textInputLayoutNo.setErrorEnabled(false);
                 }
                 if(password.equals("")){
-                    textInputLayoutPw.setError("Please input password.");
+                    textInputLayoutPw.setError("请输入密码");
                     return;
                 }else{
                     textInputLayoutPw.setErrorEnabled(false);
                 }
                 final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-                progressDialog.setTitle("Login");
-                progressDialog.setMessage("Logging...");
+                progressDialog.setTitle("登录");
+                progressDialog.setMessage("登录中...");
                 BmobQuery<User> query = new BmobQuery<User>();
                 query.addWhereEqualTo("mobileNumber", number);
                 query.findObjects(new FindListener<User>() {
@@ -115,10 +115,10 @@ public class LoginActivity extends BaseActivity {
                                 progressDialog.dismiss();
                                 Log.i(TAG, "done: 共"+list.size());
                                 AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
-                                dialog.setTitle("Login");
-                                dialog.setMessage("Mobile number or password input error. Please reenter.");
+                                dialog.setTitle("登录");
+                                dialog.setMessage("账号或密码错误，请重新输入。");
                                 dialog.setCancelable(true);
-                                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                     }
@@ -130,10 +130,10 @@ public class LoginActivity extends BaseActivity {
                         }else{
                             progressDialog.dismiss();
                             AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
-                            dialog.setTitle("Login");
-                            dialog.setMessage("Mobile number input error. Please reenter.");
+                            dialog.setTitle("登录");
+                            dialog.setMessage("手机号输入错误，请重新输入");
                             dialog.setCancelable(true);
-                            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                 }

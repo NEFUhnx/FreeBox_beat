@@ -159,9 +159,9 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(HomeActivity.this);
-                dialog.setTitle("Call");
-                dialog.setMessage("Call " + itemMobileNumber + "?");
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setTitle("呼叫");
+                dialog.setMessage("呼叫 " + itemMobileNumber + "?");
+                dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (ContextCompat.checkSelfPermission(HomeActivity.this,
@@ -173,7 +173,7 @@ public class HomeActivity extends BaseActivity {
                         }
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -251,7 +251,7 @@ public class HomeActivity extends BaseActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     call();
                 }else{
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

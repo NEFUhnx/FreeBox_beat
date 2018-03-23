@@ -70,7 +70,7 @@ public class Home_Fragment extends Fragment {
         ActionBar actionBar = activity.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Home");
+            actionBar.setTitle("主页");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
         initItems();

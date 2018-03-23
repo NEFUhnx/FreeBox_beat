@@ -23,7 +23,7 @@ public class SettingActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = (ActionBar) getSupportActionBar();
         if(actionBar != null){
-            actionBar.setTitle("Setting");
+            actionBar.setTitle("设置");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

@@ -23,7 +23,7 @@ public class AboutsActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = (ActionBar) getSupportActionBar();
         if(actionBar != null){
-            actionBar.setTitle("Abouts");
+            actionBar.setTitle("关于");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

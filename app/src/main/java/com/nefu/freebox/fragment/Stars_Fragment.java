@@ -78,7 +78,7 @@ public class Stars_Fragment extends Fragment {
         ActionBar actionBar = (ActionBar) activity.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Stars");
+            actionBar.setTitle("收藏");
             actionBar.setHomeAsUpIndicator(R.mipmap.menu);
         }
 

@@ -75,10 +75,10 @@ public class RegisterActivity2 extends BaseActivity {
                     });
 
                     AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity2.this);
-                    dialog.setTitle("Sign Up");
-                    dialog.setMessage("Sign up successful.");
+                    dialog.setTitle("注册");
+                    dialog.setMessage("注册成功");
                     dialog.setCancelable(true);
-                    dialog.setPositiveButton("Go Login", new DialogInterface.OnClickListener() {
+                    dialog.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(RegisterActivity2.this, LoginActivity.class);
@@ -90,10 +90,10 @@ public class RegisterActivity2 extends BaseActivity {
                 }else{
                     //两次输入密码不同，提示，不做任何处理
                     AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity2.this);
-                    dialog.setTitle("Sign Up");
-                    dialog.setMessage("Different passwords for the two input. Please reenter it.");
+                    dialog.setTitle("注册");
+                    dialog.setMessage("两次输入的密码不同，请重新输入");
                     dialog.setCancelable(true);
-                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                         }

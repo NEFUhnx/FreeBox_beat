@@ -32,7 +32,6 @@
         <activity android:name=".activity.MyHouseActivity" />
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTask"
             android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +55,7 @@
             android:name=".activity.PersonActivity"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <activity android:name=".activity.ReleaseActivity" />
-        <activity android:name=".activity.LandlordActivity"></activity>
+        <activity android:name=".activity.LandlordActivity"/>
     </application>
 
 </manifest>

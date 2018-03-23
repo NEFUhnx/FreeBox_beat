@@ -57,7 +57,7 @@
 
             <TextView
                 android:id="@+id/item_msg_time"
-                android:text="time"
+                android:text="10:21"
                 android:textSize="14sp"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/item_msg_count"
-                android:text="count"
+                android:text=""
                 android:textSize="14sp"
                 android:gravity="center"
                 android:layout_width="match_parent"

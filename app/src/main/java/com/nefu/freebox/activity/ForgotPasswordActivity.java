@@ -82,8 +82,8 @@ public class ForgotPasswordActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 final ProgressDialog progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
-                progressDialog.setTitle("Next");
-                progressDialog.setMessage("Being verified...");
+                progressDialog.setTitle("下一步");
+                progressDialog.setMessage("正在验证...");
                 progressDialog.show();
                 verifyCode = textInputLayoutCode.getEditText().getText().toString();
                 BmobSMS.verifySmsCode(ForgotPasswordActivity.this, number, verifyCode,
@@ -100,10 +100,10 @@ public class ForgotPasswordActivity extends BaseActivity {
                                     //验证失败
                                     progressDialog.dismiss();
                                     final AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
-                                    dialog.setTitle("Next");
-                                    dialog.setMessage("Verification code input error, please reenter.");
+                                    dialog.setTitle("下一步");
+                                    dialog.setMessage("验证码输入错误，请重新输入");
                                     dialog.setCancelable(true);
-                                    dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                         }
@@ -138,7 +138,7 @@ public class ForgotPasswordActivity extends BaseActivity {
             case 1:
                 if (!(grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)){
                     finish();
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您取消了授权", Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -147,7 +147,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         //获取手机号码并检测
         number = textInputLayoutNo.getEditText().getText().toString();
         if(!isMobile(number)){
-            textInputLayoutNo.setError("Please input a correct mobile number.");
+            textInputLayoutNo.setError("请输入正确的手机号码");
         }else{
             textInputLayoutNo.setErrorEnabled(false);
             BmobQuery<User> query = new BmobQuery<User>();
@@ -159,10 +159,10 @@ public class ForgotPasswordActivity extends BaseActivity {
                         sendSMSCode();
                     }else{
                         AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
-                        dialog.setTitle("Reset password");
-                        dialog.setMessage("The mobile number is not registered.");
+                        dialog.setTitle("重置密码");
+                        dialog.setMessage("该手机号未被注册");
                         dialog.setCancelable(true);
-                        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        dialog.setPositiveButton("好", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -184,7 +184,7 @@ public class ForgotPasswordActivity extends BaseActivity {
                     bt_verify.setClickable(false);
                     bt_verify.setBackgroundColor(Color.GRAY);
                     Toast.makeText(ForgotPasswordActivity.this,
-                            "Verification code has been sent, valid for 10 minutes",
+                            "验证码已发送，请在10分钟内填写",
                             Toast.LENGTH_LONG).show();
                     //倒计时1分钟
                     new CountDownTimer(60000,1000){
@@ -197,12 +197,12 @@ public class ForgotPasswordActivity extends BaseActivity {
                         public void onFinish() {
                             bt_verify.setClickable(true);
                             bt_verify.setBackgroundColor(getResources().getColor(R.color.colorButton));
-                            bt_verify.setText("resend");
+                            bt_verify.setText("重新发送");
                         }
                     }.start();
                 }else{
                     Toast.makeText(ForgotPasswordActivity.this,
-                            "Send failed. please check the network connection.",
+                            "发送失败，请检查网络连接。",
                             Toast.LENGTH_SHORT).show();
                 }
             }
